@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Medical Consultation Form</title>
+   <link rel="stylesheet" href="https://cdn.ckeditor.com/4.16.2/full-all/ckeditor.css" integrity="sha384-AS1E35a19O9N54ohmio8FvHUz/hIOol1KmaiwMmsvuXqsGeyWp9Po+V4jh1WtTV/" crossorigin="anonymous">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+   <style>
+      body {
+         background-color: #f8f9fa;
+         font-family: 'Helvetica Neue', Arial, sans-serif;
+      }
+      .container {
+         background-color: #fff;
+         padding: 30px;
+         border-radius: 10px;
+         box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+         max-width: 800px;
+         margin: 50px auto;
+      }
+      .form-label {
+         font-weight: bold;
+      }
+      .errors {
+         list-style: none;
+         padding: 0;
+         margin: 0;
+      }
+      .errors li {
+         color: #dc3545;
+         font-weight: bold;
+         margin-top: 5px;
+      }
+      .btn-primary {
+         background-color: #007bff;
+         border-color: #007bff;
+      }
+      .btn-primary:hover {
+         background-color: #0069d9;
+         border-color: #0062cc;
+      }
+   </style>
+</head>
+<body>
+   {{ ckeditor.load() }}
+   {{ ckeditor.load(pkg_type="basic") }}
+   {% macro render_field(field, label_text) %}
+   <div class="col-md-6 mb-3">
+      <label for="{{ field.id }}" class="form-label">{{ label_text }}</label>
+      {{ field(class="form-control" + (" datepicker" if field.id == "patient_dob" else "") + (" form-control-file" if field.id == "clinic_logo" else ""), style="border: none;" if field.id == "clinic_logo" else "") }}
+      {% if field.errors %}
+      <ul class="errors">
+         {% for error in field.errors %}
+         <li>{{ error }}</li>
+         {% endfor %}
+      </ul>
+      {% endif %}
+   </div>
+   {% endmacro %}
+
+   <form method="post" enctype="multipart/form-data" class="container">
+      {{ form.hidden_tag() }}
+      <div class="row">
+         {{ render_field(form.clinic_name, "Clinic Name") }}
+         {{ render_field(form.clinic_logo, "Clinic Logo") }}
+      </div>
+      <div class="row">
+         {{ render_field(form.physician_name, "Physician Name") }}
+         {{ render_field(form.physician_contact, "Physician Contact") }}
+      </div>
+      <div class="row">
+         {{ render_field(form.patient_first_name, "Patient First Name") }}
+         {{ render_field(form.patient_last_name, "Patient Last Name") }}
+      </div>
+      <div class="row">
+         {{ render_field(form.patient_dob, "Patient DOB") }}
+         {{ render_field(form.patient_contact, "Patient Contact") }}
+      </div>
+      <div class="row">
+         <div class="col-md-12 mb-3">
+            <label for="chief_complaint" class="form-label">Chief Complaint</label>
+            {{ form.chief_complaint(class="form-control", rows="3") }}
+            {% if form.chief_complaint.errors %}
+            <ul class="errors">
+               {% for error in form.chief_complaint.errors %}
+               <li>{{ error }}</li>
+               {% endfor %}
+            </ul>
+            {% endif %}
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-md-12 mb-3">
+            <label for="consultation_note" class="form-label">Consultation Note</label>
+            {{ form.consultation_note(class="form-control", rows="5") }}
+            {% if form.consultation_note.errors %}
+            <ul class="errors">
+               {% for error in form.consultation_note.errors %}
+               <li>{{ error }}</li>
+               {% endfor %}
+            </ul>
+            {% endif %}
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-md-12">
+            <button type="submit" class="btn btn-primary">Generate Report</button>
+         </div>
+      </div>
+   </form>
+
+   <script src="https://cdn.ckeditor.com/4.16.2/full-all/ckeditor.js" integrity="sha384-4uqPCo9ajRdLr0ZN/luYBnQZnBLAZbAF/NWs" crossorigin="anonymous"></script>
+   <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
+</body>
+</html>

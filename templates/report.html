@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Medical Consultation Report</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 1cm;
+            @top-center {
+                content: element(header);
+            }
+            @bottom-center {
+                content: "This report is generated on {{ timestamp }} from {{ ip }} - Page " counter(page) " of " counter(pages);
+                font-size: 10pt;
+
+            }
+            background-color: rgba(211, 211, 211, 0.3); 
+
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+            position: relative;
+        }
+
+        
+
+        header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            max-width: 100px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        .clinic-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+            border: 1px solid #ddd;
+            box-decoration-break: clone;
+
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: none;
+            border: 1px solid #ddd;
+            box-decoration-break: clone;
+
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #e6e6e6;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="{{ clinic_logo }}" class="logo" alt="Clinic Logo">
+        <div class="clinic-name">{{ form.clinic_name }}</div>
+    </header>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Physician Name</th>
+                <td>{{ form.physician_name.data }}</td>
+            </tr>
+            <tr>
+                <th>Physician Contact</th>
+                <td>{{ form.physician_contact.data }}</td>
+            </tr>
+            <tr>
+                <th>Patient First Name</th>
+                <td>{{ form.patient_first_name.data }}</td>
+            </tr>
+            <tr>
+                <th>Patient Last Name</th>
+                <td>{{ form.patient_last_name.data }}</td>
+            </tr>
+            <tr>
+                <th>Patient DOB</th>
+                <td>{{ form.patient_dob.data }}</td>
+            </tr>
+            <tr>
+                <th>Patient Contact</th>
+                <td>{{ form.patient_contact.data }}</td>
+            </tr>
+            <tr>
+                <th>Chief Complaint</th>
+                <td>{{ form.chief_complaint.data|safe }}</td>
+            </tr>
+            <tr>
+                <th>Consultation Note</th>
+                <td>{{ form.consultation_note.data|safe }}</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    
+</body>
+</html>
