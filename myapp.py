@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, send_file
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField, FileField,DateField
+from wtforms import StringField, FileField,DateField
 from wtforms.validators import DataRequired,Regexp, ValidationError
 from flask_wtf.file import FileAllowed, FileRequired
 from flask_ckeditor import CKEditorField
@@ -9,7 +9,6 @@ from werkzeug.utils import secure_filename
 import datetime
 import os
 from flask_ckeditor import CKEditor
-import base64
 from weasyprint import HTML
 
 
