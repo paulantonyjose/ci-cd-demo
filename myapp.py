@@ -30,8 +30,8 @@ def validate_date_not_above_current(field):
     try:
         if field.data > datetime.datetime.today().date():
             raise ValidationError("Date of birth cannot be in the future.")
-    except ValueError:
-        raise ValidationError("Invalid date format. Please use YYYY-MM-DD.")
+    except ValueError as exc:
+        raise ValidationError("Invalid date format. Please use YYYY-MM-DD.") from exc
 
 
 # Custom validator for numbers only
