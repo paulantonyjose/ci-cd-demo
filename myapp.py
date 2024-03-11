@@ -25,7 +25,7 @@ app.config["UPLOAD_FOLDER"] = "uploads/"
 ckeditor.init_app(app=app)
 
 
-def validate_date_not_above_current(field):
+def validate_date_not_above_current(form, field):
     """Custom validator to check date is not in the future."""
     try:
         if field.data > datetime.datetime.today().date():
@@ -35,7 +35,7 @@ def validate_date_not_above_current(field):
 
 
 # Custom validator for numbers only
-def validate_numbers_only(field):
+def validate_numbers_only(form, field):
     """Custom validator to check field contains only numbers."""
     if not field.data.isdigit():
         raise ValidationError("This field should contain numbers only.")
